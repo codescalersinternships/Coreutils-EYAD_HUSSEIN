@@ -8,19 +8,23 @@ import (
 )
 
 func Cat(command *models.Command, flags []string) {
-	if !utils.CheckFlags(flags, command.Flags) {
+	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
-
-	start := 2
-	if utils.ContainsFlag(flags, "-n") {
-		start = 3
-	}
-
+	
+	_, ok := utils.ContainsFlag(flags, "-n")
+	
 	var files []string
-
-	for _, arg := range os.Args[start:] {
-		files = append(files, arg)
+	
+	if ok {
+		for _, arg := range os.Args[2:] {
+			if arg == "-n" {
+				continue
+			}
+			files = append(files, arg)
+		}
+	} else {
+		files = os.Args[2:]
 	}
 
 	if len(files) == 0 {
@@ -28,50 +32,64 @@ func Cat(command *models.Command, flags []string) {
 		os.Exit(1)
 	}
 
-	lineNumber := 1
-	for _, file := range files {
-		f, err := os.Open(file)
-		if err != nil {
-			fmt.Println("Error:", err)
-			os.Exit(1)
-		}
-		defer f.Close()
-
-		buffer := make([]byte, 4096)
-		var line string
-
-		for {
-			n, err := f.Read(buffer)
-			if err != nil && err.Error() != "EOF" {
+	if !ok {
+		for _, file := range files {
+			f, err := os.ReadFile(file)
+			if err != nil {
 				fmt.Println("Error:", err)
 				os.Exit(1)
 			}
-			if n == 0 {
-				break
+			fmt.Println(string(f))
+		}
+	} else {
+		lineNumber := 1
+		for _, file := range files {
+			f, err := os.Open(file)
+			if err != nil {
+				fmt.Println("Error:", err)
+				os.Exit(1)
 			}
+			defer f.Close()
+	
+			buffer := make([]byte, 4096)
+			var line string
+	
+			for {
+				n, err := f.Read(buffer)
+				if err != nil && err.Error() != "EOF" {
+					fmt.Println("Error:", err)
+					os.Exit(1)
+				}
 
-			content := string(buffer[:n])
-			for _, char := range content {
-				if char == '\n' {
-					if utils.ContainsFlag(flags, "-n") {
-						fmt.Printf("%6d  %s\n", lineNumber, line)
-						lineNumber++
+				if n == 0 {
+					break
+				}
+	
+				content := string(buffer[:n])
+				for _, char := range content {
+					if char == '\n' {
+						if ok {
+							fmt.Printf("%6d  %s\n", lineNumber, line)
+							lineNumber++
+						} else {
+							fmt.Println(line)
+						}
+						line = ""
 					} else {
-						fmt.Println(line)
+						line += string(char)
 					}
-					line = ""
+				}
+			}
+	
+			if len(line) > 0 {
+				if ok {
+					fmt.Printf("%6d  %s\n", lineNumber, line)
 				} else {
-					line += string(char)
+					fmt.Println(line)
 				}
 			}
 		}
-
-		if len(line) > 0 {
-			if utils.ContainsFlag(flags, "-n") {
-				fmt.Printf("%6d  %s\n", lineNumber, line)
-			} else {
-				fmt.Println(line)
-			}
-		}
 	}
+	
+
 }

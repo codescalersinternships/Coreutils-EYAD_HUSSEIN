@@ -1,11 +1,11 @@
 package utils
 
 
-func ContainsFlag(flags []string, flag string) bool {
-        for _, f := range flags {
+func ContainsFlag(flags []string, flag string) (int, bool) {
+        for index, f := range flags {
                 if f == flag {
-                        return true
+                        return index, true
                 }
         }
-        return false
+        return -1, false
 }

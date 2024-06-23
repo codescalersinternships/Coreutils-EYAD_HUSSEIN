@@ -8,6 +8,7 @@ type Command struct {
 }
 
 
+
 func CreateCommand(name string, flags []string, description string) *Command {
 	return &Command{
 		Name: name,

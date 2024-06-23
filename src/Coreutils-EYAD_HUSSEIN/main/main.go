@@ -2,6 +2,7 @@ package main
 
 import (
 	"Coreutils-EYAD_HUSSEIN/commands"
+	"Coreutils-EYAD_HUSSEIN/models"
 	"Coreutils-EYAD_HUSSEIN/utils"
 	"fmt"
 	"os"
@@ -18,7 +19,7 @@ func main() {
 
 	command := args[1]
 
-	commandModel, exists := utils.CheckCommand(command)
+	commandModel, exists := utils.ValidateCommand(command)
 
 	if !exists {
 		os.Exit(1)
@@ -42,12 +43,14 @@ func main() {
 	// 	commands.Wc(flags)
 	case "cat":
 		commands.Cat(commandModel, flags)
-	case "echo":
-		commands.Echo(commandModel, flags)
+	case models.CommandsMap["echo"].Name:
+		commands.Echo(flags)
 	case "true":
 		commands.True()
 	case "false":
 		commands.False()
+	case "env":
+		commands.Env()
 	default:
 		os.Exit(1)
 	}

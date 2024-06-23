@@ -10,14 +10,15 @@ import (
 )
 
 func Head(command *models.Command, flags []string) {
-	if !utils.CheckFlags(flags, command.Flags) {
+	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 
 	numLines := 10
 	fileIndex := 2
 
-	if utils.ContainsFlag(flags, "-n") {
+	_, ok := utils.ContainsFlag(flags, "-n")
+	if ok {
 		for i := 2; i < len(os.Args)-1; i++ {
 			if os.Args[i] == "-n" {
 				numLinesTemp, err := strconv.Atoi(os.Args[i+1])

@@ -6,9 +6,9 @@ import (
 )
 
 
-func CheckCommand(command string) (*models.Command, bool) {
+func ValidateCommand(command string) (*models.Command, bool) {
 
-        commands := CreateCommands()
+        commands := models.Commands
         exists := false
         var selectedCommand *models.Command
 
@@ -32,17 +32,17 @@ func CheckCommand(command string) (*models.Command, bool) {
         return selectedCommand, true
 }
 
-func CheckFlags(flags []string, allowedFlags []string) bool {
-        if !checkAllowedFlags(flags, allowedFlags) {
+func ValidateFlags(flags []string, allowedFlags []string) bool {
+        if !validateAllowedFlags(flags, allowedFlags) {
                 return false
         }
-        if !checkFlagNumbers(flags, allowedFlags) {
+        if !validateFlagNumbers(flags, allowedFlags) {
                 return false
         }
         return true
 }
 
-func checkAllowedFlags(flags []string, allowedFlags []string) bool {
+func validateAllowedFlags(flags []string, allowedFlags []string) bool {
         for _, flag := range flags {
                 exists := false
                 for _, allowedFlag := range allowedFlags {
@@ -63,7 +63,7 @@ func checkAllowedFlags(flags []string, allowedFlags []string) bool {
         return true
 }
 
-func checkFlagNumbers(flags []string, allowedFlags []string) bool {
+func validateFlagNumbers(flags []string, allowedFlags []string) bool {
         if len(flags) > len(allowedFlags) {
                 fmt.Println("Too many flags were entered")
                 fmt.Println("Allowed flags:")

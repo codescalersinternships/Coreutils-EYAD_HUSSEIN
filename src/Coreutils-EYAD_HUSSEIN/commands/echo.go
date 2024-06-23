@@ -7,13 +7,20 @@ import (
 	"os"
 )
 
-func Echo(command *models.Command, flags []string) {
-	if !utils.CheckFlags(flags, command.Flags) {
+func Echo(flags []string) {
+	command := models.CommandsMap["echo"]
+
+	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 	
 	start := 2
-	if utils.ContainsFlag(flags, "-n") {
+
+	idx, ok := utils.ContainsFlag(flags, "-n")
+
+	flag := ok && idx == 2
+
+	if flag {
 		start = 3
 	}
 
@@ -21,7 +28,7 @@ func Echo(command *models.Command, flags []string) {
 		fmt.Print(arg, " ")
 	}
 
-	if !utils.ContainsFlag(flags, "-n") {
+	if !flag {
 		fmt.Println()
 	}
 
