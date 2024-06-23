@@ -40,10 +40,14 @@ func main() {
 	// 	commands.Tail(flags)
 	// case "wc":
 	// 	commands.Wc(flags)
-	// case "cat":
-	// 	commands.Cat(flags)
+	case "cat":
+		commands.Cat(commandModel, flags)
 	case "echo":
 		commands.Echo(commandModel, flags)
+	// case "true":
+	// 	commands.True()
+	// case "false":
+	// 	commands.False()
 	default:
 		os.Exit(1)
 	}
