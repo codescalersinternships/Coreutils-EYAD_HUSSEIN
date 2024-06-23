@@ -34,8 +34,8 @@ func main() {
 	}
 
 	switch commandModel.Name {
-	// case "head":
-	// 	commands.Head(flags)
+	case "head":
+		commands.Head(commandModel, flags)
 	case "tail":
 		commands.Tail(commandModel, flags)
 	// case "wc":
@@ -44,10 +44,10 @@ func main() {
 		commands.Cat(commandModel, flags)
 	case "echo":
 		commands.Echo(commandModel, flags)
-	// case "true":
-	// 	commands.True()
-	// case "false":
-	// 	commands.False()
+	case "true":
+		commands.True()
+	case "false":
+		commands.False()
 	default:
 		os.Exit(1)
 	}
