@@ -56,7 +56,9 @@ func Head(command *models.Command, flags []string) {
 
 		defer f.Close()
 
-		fmt.Println("==> " + file + " <==")
+		if len(files) > 1 {
+			fmt.Println("==> " + file + " <==")
+		}
 		counter := 0
 
 		buffer := make([]byte, 4096)

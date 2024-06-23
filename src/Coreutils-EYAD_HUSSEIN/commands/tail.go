@@ -10,59 +10,74 @@ import (
 )
 
 func Tail(command *models.Command, flags []string) {
-	if !utils.ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
-	}
+	ok := utils.ContainsFlag(flags, "-n")
+	idx := utils.GetIndexOfArg("-n")
+
+	var files []string
 
 	numLines := 10
-	fileIndex := 2
 
-	ok := utils.ContainsFlag(flags, "-n")
-	
 	if ok {
-		for i := 2; i < len(os.Args)-1; i++ {
-			if os.Args[i] == "-n" {
-				numLinesTemp, err := strconv.Atoi(os.Args[i+1])
+		for _, arg := range os.Args[2:] {
+			if arg == "-n" || arg == os.Args[idx+1] {
+				numLinesTemp, err := strconv.Atoi(os.Args[idx+1])
 				if err != nil {
 					fmt.Println("Error:", err)
 					os.Exit(1)
 				}
+
 				numLines = numLinesTemp
-				fileIndex = i + 2
-				break
+				continue
 			}
+
+			files = append(files, arg)
 		}
+	} else {
+		files = os.Args[2:]
 	}
 
-	fileName := os.Args[fileIndex]
-
-	file, err := os.Open(fileName)
-	if err != nil {
-		fmt.Println("Error:", err)
+	if len(files) == 0 {
+		fmt.Println("No files were entered!")
 		os.Exit(1)
 	}
-	defer file.Close()
 
-	lines := make([]string, numLines)
-	lineCount := 0
-	scanner := bufio.NewScanner(file)
 
-	for scanner.Scan() {
-		lines[lineCount%numLines] = scanner.Text()
-		lineCount++
-	}
+	for _, file := range files {
+		f, err := os.Open(file)
 
-	start := lineCount % numLines
-	if lineCount < numLines {
-		start = 0
-	}
+		if err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
 
-	for i := start; i < start+numLines && i < lineCount; i++ {
-		fmt.Println(lines[i%numLines])
-	}
+		defer f.Close()
 
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		if len(files) > 1 {
+			fmt.Println("==> " + file + " <==")
+		}
+
+
+		lines := make([]string, numLines)
+		lineCount := 0
+		scanner := bufio.NewScanner(f)
+
+		for scanner.Scan() {
+			lines[lineCount%numLines] = scanner.Text()
+			lineCount++
+		}
+
+		start := lineCount % numLines
+		if lineCount < numLines {
+			start = 0
+		}
+
+		for i := start; i < start+numLines && i < lineCount; i++ {
+			fmt.Println(lines[i%numLines])
+		}
+
+		if err := scanner.Err(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
 	}
 }
