@@ -36,8 +36,8 @@ func main() {
 	switch commandModel.Name {
 	// case "head":
 	// 	commands.Head(flags)
-	// case "tail":
-	// 	commands.Tail(flags)
+	case "tail":
+		commands.Tail(commandModel, flags)
 	// case "wc":
 	// 	commands.Wc(flags)
 	case "cat":
