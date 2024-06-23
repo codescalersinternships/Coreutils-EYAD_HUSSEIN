@@ -1,11 +1,24 @@
 package utils
 
+import "os"
 
-func ContainsFlag(flags []string, flag string) (int, bool) {
-        for index, f := range flags {
+func ContainsFlag(flags []string, flag string) bool {
+        for _, f := range flags {
                 if f == flag {
-                        return index, true
+                        return true
                 }
         }
-        return -1, false
+        return false
+}
+
+func GetIndexOfArg(arg string) int {
+        args := os.Args
+
+        for i := 0; i < len(args); i++ {
+                if args[i] == arg {
+                        return i
+                }
+        }
+
+        return -1
 }

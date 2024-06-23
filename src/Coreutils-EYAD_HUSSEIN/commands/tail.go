@@ -17,7 +17,8 @@ func Tail(command *models.Command, flags []string) {
 	numLines := 10
 	fileIndex := 2
 
-	_, ok := utils.ContainsFlag(flags, "-n")
+	ok := utils.ContainsFlag(flags, "-n")
+	
 	if ok {
 		for i := 2; i < len(os.Args)-1; i++ {
 			if os.Args[i] == "-n" {

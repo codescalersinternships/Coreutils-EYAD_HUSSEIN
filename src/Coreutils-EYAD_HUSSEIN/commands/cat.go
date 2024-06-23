@@ -12,7 +12,7 @@ func Cat(command *models.Command, flags []string) {
 		os.Exit(1)
 	}
 	
-	_, ok := utils.ContainsFlag(flags, "-n")
+	ok := utils.ContainsFlag(flags, "-n")
 	
 	var files []string
 	

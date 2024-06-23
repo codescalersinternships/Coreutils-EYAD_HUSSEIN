@@ -16,9 +16,10 @@ func Echo(flags []string) {
 	
 	start := 2
 
-	idx, ok := utils.ContainsFlag(flags, "-n")
+	ok := utils.ContainsFlag(flags, "-n")
+	idx := utils.GetIndexOfArg("-n")
 
-	flag := ok && idx == 2
+	flag := (ok && idx == 2)
 
 	if flag {
 		start = 3

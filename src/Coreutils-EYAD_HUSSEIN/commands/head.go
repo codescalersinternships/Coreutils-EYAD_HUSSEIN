@@ -3,7 +3,6 @@ package commands
 import (
 	"Coreutils-EYAD_HUSSEIN/models"
 	"Coreutils-EYAD_HUSSEIN/utils"
-	"bufio"
 	"fmt"
 	"os"
 	"strconv"
@@ -14,52 +13,89 @@ func Head(command *models.Command, flags []string) {
 		os.Exit(1)
 	}
 
-	numLines := 10
-	fileIndex := 2
 
-	_, ok := utils.ContainsFlag(flags, "-n")
+	ok := utils.ContainsFlag(flags, "-n")
+	idx := utils.GetIndexOfArg("-n")
+
+	var files []string
+
+	numLines := 10
+
 	if ok {
-		for i := 2; i < len(os.Args)-1; i++ {
-			if os.Args[i] == "-n" {
-				numLinesTemp, err := strconv.Atoi(os.Args[i+1])
+		for _, arg := range os.Args[2:] {
+			if arg == "-n" || arg == os.Args[idx+1] {
+				numLinesTemp, err := strconv.Atoi(os.Args[idx+1])
 				if err != nil {
 					fmt.Println("Error:", err)
 					os.Exit(1)
 				}
+
 				numLines = numLinesTemp
-				fileIndex = i + 2
+				continue
+			}
+
+			files = append(files, arg)
+		}
+	} else {
+		files = os.Args[2:]
+	}
+
+	if len(files) == 0 {
+		fmt.Println("No files were entered!")
+		os.Exit(1)
+	}
+
+
+	for _, file := range files {
+		f, err := os.Open(file)
+
+		if err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		defer f.Close()
+
+		fmt.Println("==> " + file + " <==")
+		counter := 0
+
+		buffer := make([]byte, 4096)
+		var line string
+
+		for {
+			n, err := f.Read(buffer)
+			if err != nil && err.Error() != "EOF" {
+				fmt.Println("Error:", err)
+				os.Exit(1)
+			}
+
+			if n == 0 {
+				break
+			}
+
+			content := string(buffer[:n])
+			done := false
+
+			for _, char := range content {
+				if char == '\n' {
+					fmt.Println(line)
+					line = ""
+					counter++
+
+					if counter == numLines {
+						done = true
+						break
+					}
+				} else {
+					line += string(char)
+				}
+			}
+
+			if done {
 				break
 			}
 		}
-	}
 
-	fileName := os.Args[fileIndex]
-
-	file, err := os.Open(fileName)
-	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
-	}
-	defer file.Close()
-
-	lines := make([]string, 0, numLines)
-	scanner := bufio.NewScanner(file)
-
-	lineCount := 0
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-		lineCount++
-		if lineCount >= numLines {
-			break
-		}
-	}
-
-	for _, line := range lines {
-		fmt.Println(line)
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		fmt.Println()
 	}
 }
