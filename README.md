@@ -10,7 +10,7 @@ github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN is a collection of Unix
 ├── pkg
 ├── README.md
 └── src
-    └── github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN
+    └── Coreutils-EYAD_HUSSEIN
         ├── cmd
         │   ├── cat
         │   │   └── main.go
@@ -32,27 +32,24 @@ github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN is a collection of Unix
         │   │   └── main.go
         │   └── yes
         │       └── main.go
-        ├── commands
-        │   ├── cat.go
-        │   ├── echo.go
-        │   ├── env.go
-        │   ├── false.go
-        │   ├── head.go
-        │   ├── tail.go
-        │   ├── tree.go
-        │   ├── true.go
-        │   ├── wc.go
-        │   └── yes.go
         ├── go.mod
-        ├── models
-        │   ├── command.go
-        │   └── commands.go
-        └── utils
+        └── pkg
+            ├── cat.go
+            ├── command.go
+            ├── commands.go
+            ├── echo.go
+            ├── env.go
+            ├── false.go
             ├── generalUtils.go
-            └── validateInput.go
+            ├── head.go
+            ├── tail.go
+            ├── tree.go
+            ├── true.go
+            ├── validateInput.go
+            ├── wc.go
+            └── yes.go
 ```
-
-- **bin/**: Contains executable binaries.
+- **cmd/**: Holds commands directories and files.
 - **pkg/**: Holds package files.
 - **src/github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN/**: Source directory for the project.
 
