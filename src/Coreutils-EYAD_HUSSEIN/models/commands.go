@@ -13,14 +13,15 @@ func init() {
 
 func createCommands() []*Command {
 	commands := []*Command{
-		CreateCommand("head", []string{"-n"}, "Description for head"),
-		CreateCommand("tail", []string{"-n"}, "Description for tail"),
-		CreateCommand("wc", []string{"-l", "-w", "-c"}, "Description for wc"),
-		CreateCommand("cat", []string{"-n"}, "Description for cat"),
-		CreateCommand("echo", []string{"-n"}, "Description for echo"),
-		CreateCommand("true", []string{}, "Description for true"),
-		CreateCommand("false", []string{}, "Description for false"),
-		CreateCommand("env", []string{}, "Description for env"),
+		CreateCommand("head", []string{"-n"}),
+		CreateCommand("tail", []string{"-n"}),
+		CreateCommand("wc", []string{"-l", "-w", "-c"}),
+		CreateCommand("cat", []string{"-n"}),
+		CreateCommand("echo", []string{"-n"}),
+		CreateCommand("true", []string{}),
+		CreateCommand("false", []string{}),
+		CreateCommand("env", []string{}),
+		CreateCommand("yes", []string{}),
 	}
 
 

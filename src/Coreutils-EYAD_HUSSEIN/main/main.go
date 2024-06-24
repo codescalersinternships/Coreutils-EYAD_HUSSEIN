@@ -35,22 +35,24 @@ func main() {
 	}
 
 	switch commandModel.Name {
-	case "head":
+	case models.CommandsMap["head"].Name:
 		commands.Head(commandModel, flags)
-	case "tail":
+	case models.CommandsMap["tail"].Name:
 		commands.Tail(commandModel, flags)
-	case "wc":
+	case models.CommandsMap["wc"].Name:
 		commands.Wc(flags)
-	case "cat":
+	case models.CommandsMap["cat"].Name:
 		commands.Cat(commandModel, flags)
 	case models.CommandsMap["echo"].Name:
 		commands.Echo(flags)
-	case "true":
+	case models.CommandsMap["true"].Name:
 		commands.True()
-	case "false":
+	case models.CommandsMap["false"].Name:
 		commands.False()
-	case "env":
+	case models.CommandsMap["env"].Name:
 		commands.Env()
+	case models.CommandsMap["yes"].Name:
+		commands.Yes()
 	default:
 		os.Exit(1)
 	}
