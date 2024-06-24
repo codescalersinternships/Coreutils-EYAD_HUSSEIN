@@ -12,7 +12,7 @@ import (
 
 func Tree(flags []string) {
 	command := models.CommandsMap["tree"]
-	
+
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
@@ -29,13 +29,12 @@ func Tree(flags []string) {
 		maxDepth = tempMaxDepth
 	}
 
-	
 	for index, arg := range os.Args[2:] {
 		if arg == "-L" || arg == strconv.Itoa(maxDepth) {
 			continue
 		}
 		printDirectory(arg, 0, maxDepth)
-		
+
 		if index != len(os.Args[2:])-1 {
 			fmt.Println()
 		}
@@ -54,19 +53,19 @@ func printListing(entry string, depth int, maxDepth int) {
 	} else {
 		entrySplit := strings.Split(entry, "/")
 		var entryName string
-			
+
 		if entrySplit[len(entrySplit)-1] == "" {
 			entryName = entrySplit[len(entrySplit)-2]
 		} else {
 			entryName = entrySplit[len(entrySplit)-1]
 		}
-		
+
 		fmt.Printf("%s|-- %s\n", indent, entryName)
 	}
 }
 
 func printDirectory(path string, depth, maxDepth int) {
-	if  maxDepth != -1 && depth > maxDepth {
+	if maxDepth != -1 && depth > maxDepth {
 		return
 	}
 
@@ -79,7 +78,6 @@ func printDirectory(path string, depth, maxDepth int) {
 		fmt.Printf("error reading %s: %s\n", path, err.Error())
 		return
 	}
-
 
 	printListing(path, depth, maxDepth)
 

@@ -25,6 +25,5 @@ func createCommands() []*Command {
 		CreateCommand("tree", []string{"-L"}),
 	}
 
-
 	return commands
 }

@@ -1,16 +1,13 @@
 package models
 
-
 type Command struct {
-	Name string
+	Name  string
 	Flags []string
 }
 
-
-
 func CreateCommand(name string, flags []string) *Command {
 	return &Command{
-		Name: name,
+		Name:  name,
 		Flags: flags,
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Env(){
+func Env() {
 
 	for _, env := range os.Environ() {
 		envPair := strings.Split(env, "=")

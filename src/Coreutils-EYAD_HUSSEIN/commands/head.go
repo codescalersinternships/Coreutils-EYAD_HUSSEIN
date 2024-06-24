@@ -10,7 +10,7 @@ import (
 
 func Head(flags []string) {
 	command := models.CommandsMap["head"]
-	
+
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}

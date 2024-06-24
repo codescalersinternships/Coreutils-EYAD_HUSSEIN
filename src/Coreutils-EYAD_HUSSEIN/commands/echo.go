@@ -13,7 +13,7 @@ func Echo(flags []string) {
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
-	
+
 	start := 2
 
 	ok := utils.ContainsFlag(flags, "-n")
