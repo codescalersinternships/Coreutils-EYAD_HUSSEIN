@@ -1,47 +1,33 @@
 package pkg
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
 
-func Cat(flags []string) {
-	command := CommandsMap["cat"]
+func Cat() {
 
-	if !ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
-	}
+	var nFlag bool
 
-	ok := ContainsFlag(flags, "-n")
-	files := parseCatArgs(ok)
+	flag.BoolVar(&nFlag, "n", false, "number all output lines")
 
-	if len(files) == 0 {
+	flag.Parse()
+
+	ok := len(flag.Args()) > 0
+
+	if !ok {
 		fmt.Println("No files were entered!")
 		os.Exit(1)
 	}
 
-	if !ok {
+	files := flag.Args()
+
+	if !nFlag {
 		displayFiles(files)
 	} else {
 		displayFilesWithLineNumbers(files)
 	}
-}
-
-func parseCatArgs(ok bool) []string {
-	var files []string
-
-	if ok {
-		for _, arg := range os.Args[1:] {
-			if arg == "-n" {
-				continue
-			}
-			files = append(files, arg)
-		}
-	} else {
-		files = os.Args[1:]
-	}
-
-	return files
 }
 
 func displayFiles(files []string) {

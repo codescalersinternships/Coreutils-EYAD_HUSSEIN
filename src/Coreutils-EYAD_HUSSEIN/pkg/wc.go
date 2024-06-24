@@ -1,24 +1,32 @@
 package pkg
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"unicode"
 )
 
-func Wc(flags []string) {
-	command := CommandsMap["wc"]
+func Wc() {
 
-	if !ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
-	}
+	var cFlag bool
+	var lFlag bool
+	var wFlag bool
 
-	files := parseWcArgs()
+	flag.BoolVar(&cFlag, "c", false, "print the byte counts")
+	flag.BoolVar(&lFlag, "l", false, "print the newline counts")
+	flag.BoolVar(&wFlag, "w", false, "print the word counts")
 
-	if len(files) == 0 {
+	flag.Parse()
+
+	ok := len(flag.Args()) > 0
+
+	if !ok {
 		fmt.Println("No files were entered!")
 		os.Exit(1)
 	}
+
+	files := flag.Args()
 
 	var totalLines, totalWords, totalChars int
 
@@ -28,22 +36,10 @@ func Wc(flags []string) {
 		totalWords += wordCount
 		totalChars += charCount
 
-		printFileStats(flags, file, lineCount, wordCount, charCount)
+		printFileStats(file, lineCount, wordCount, charCount, lFlag, wFlag, cFlag)
 	}
 
-	printTotalStats(flags, len(files), totalLines, totalWords, totalChars)
-}
-
-func parseWcArgs() []string {
-	var files []string
-
-	for _, arg := range os.Args[1:] {
-		if arg != "-l" && arg != "-w" && arg != "-c" {
-			files = append(files, arg)
-		}
-	}
-
-	return files
+	printTotalStats(len(files), totalLines, totalWords, totalChars, lFlag, wFlag, cFlag)
 }
 
 func countFileStats(file string) (int, int, int) {
@@ -88,12 +84,12 @@ func countFileStats(file string) (int, int, int) {
 	return lineCounter, wordCounter, charCounter
 }
 
-func printFileStats(flags []string, file string, lines, words, chars int) {
-	if ContainsFlag(flags, "-l") {
+func printFileStats(file string, lines, words, chars int, lFlag, wFlag, cFlag bool) {
+	if lFlag {
 		fmt.Printf("%d ", lines)
-	} else if ContainsFlag(flags, "-w") {
+	} else if wFlag {
 		fmt.Printf("%d ", words)
-	} else if ContainsFlag(flags, "-c") {
+	} else if cFlag {
 		fmt.Printf("%d ", chars)
 	} else {
 		fmt.Printf("%d %d %d ", lines, words, chars)
@@ -102,13 +98,13 @@ func printFileStats(flags []string, file string, lines, words, chars int) {
 	fmt.Println(file)
 }
 
-func printTotalStats(flags []string, numFiles, totalLines, totalWords, totalChars int) {
+func printTotalStats(numFiles, totalLines, totalWords, totalChars int, lFlag, wFlag, cFlag bool) {
 	if numFiles > 1 {
-		if ContainsFlag(flags, "-l") {
+		if lFlag {
 			fmt.Printf("%d ", totalLines)
-		} else if ContainsFlag(flags, "-w") {
+		} else if wFlag {
 			fmt.Printf("%d ", totalWords)
-		} else if ContainsFlag(flags, "-c") {
+		} else if cFlag {
 			fmt.Printf("%d ", totalChars)
 		} else {
 			fmt.Printf("%d %d %d ", totalLines, totalWords, totalChars)

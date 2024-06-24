@@ -5,8 +5,5 @@ import (
 )
 
 func main() {
-	flags := pkg.GetFlags()
-	pkg.ValidateFlags(flags, pkg.CommandsMap["wc"].Flags)
-
-	pkg.Wc(flags)
+	pkg.Wc()
 }

@@ -1,34 +1,26 @@
 package pkg
 
 import (
+	"flag"
 	"fmt"
-	"os"
 )
 
-func Echo(flags []string) {
-	command := CommandsMap["echo"]
+func Echo() {
+	var nFlag bool
 
-	if !ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
+	flag.BoolVar(&nFlag, "n", false, "do not output the trailing newline")
+
+	flag.Parse()
+
+	for i, arg := range flag.Args() {
+		if i == len(flag.Args())-1 {
+			if nFlag {
+				fmt.Print(arg)
+			} else {
+				fmt.Println(arg)
+			}
+		} else {
+			fmt.Print(arg, " ")
+		}
 	}
-
-	start := 1
-
-	ok := ContainsFlag(flags, "-n")
-	idx := GetIndexOfArg("-n")
-
-	flag := (ok && idx == 1)
-
-	if flag {
-		start = 2
-	}
-
-	for _, arg := range os.Args[start:] {
-		fmt.Print(arg, " ")
-	}
-
-	if !flag {
-		fmt.Println()
-	}
-
 }

@@ -1,40 +1,34 @@
 package pkg
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
-func Tree(flags []string) {
-	command := CommandsMap["tree"]
+func Tree() {
 
-	if !ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
-	}
+	var maxDepth int
 
-	maxDepth := -1
+	flag.IntVar(&maxDepth, "L", -1, "Descend only level directories deep")
 
-	if ok := ContainsFlag(flags, "-L"); ok {
-		idx := GetIndexOfArg("-L")
-		tempMaxDepth, err := strconv.Atoi(os.Args[idx+1])
-		if err != nil {
-			fmt.Println("Invalid depth value")
-			os.Exit(1)
-		}
-		maxDepth = tempMaxDepth
-	}
+	flag.Parse()
 
-	for index, arg := range os.Args[1:] {
-		if arg == "-L" || arg == strconv.Itoa(maxDepth) {
-			continue
-		}
-		printDirectory(arg, 0, maxDepth)
+	ok := len(flag.Args()) > 0
 
-		if index != len(os.Args[1:])-1 {
-			fmt.Println()
+	if !ok {
+		printDirectory(".", 0, maxDepth)
+	} else {
+		dirs := flag.Args()
+
+		for index, dir := range dirs {
+			printDirectory(dir, 0, maxDepth)
+
+			if index != len(dirs)-1 {
+				fmt.Println()
+			}
 		}
 	}
 }

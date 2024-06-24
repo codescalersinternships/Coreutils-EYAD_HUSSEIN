@@ -2,55 +2,28 @@ package pkg
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
-	"strconv"
 )
 
-func Tail(flags []string) {
-	command := CommandsMap["tail"]
+func Tail() {
+	var numLines int
 
-	if !ValidateFlags(flags, command.Flags) {
-		os.Exit(1)
-	}
+	flag.IntVar(&numLines, "n", 10, "number of lines to display")
 
-	numLines, files := parseTailFlags(flags)
+	flag.Parse()
 
-	if len(files) == 0 {
+	ok := len(flag.Args()) > 0
+
+	if !ok {
 		fmt.Println("No files were entered!")
 		os.Exit(1)
 	}
 
+	files := flag.Args()
+
 	processTailFiles(files, numLines)
-}
-
-func parseTailFlags(flags []string) (int, []string) {
-	ok := ContainsFlag(flags, "-n")
-	idx := GetIndexOfArg("-n")
-
-	numLines := 10
-	var files []string
-
-	if ok {
-		for _, arg := range os.Args[1:] {
-			if arg == "-n" || arg == os.Args[idx+1] {
-				numLinesTemp, err := strconv.Atoi(os.Args[idx+1])
-				if err != nil {
-					fmt.Println("Error:", err)
-					os.Exit(1)
-				}
-
-				numLines = numLinesTemp
-				continue
-			}
-
-			files = append(files, arg)
-		}
-	} else {
-		files = os.Args[1:]
-	}
-
-	return numLines, files
 }
 
 func processTailFiles(files []string, numLines int) {
