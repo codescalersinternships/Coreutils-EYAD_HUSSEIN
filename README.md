@@ -11,6 +11,27 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 ├── README.md
 └── src
     └── Coreutils-EYAD_HUSSEIN
+        ├── cmd
+        │   ├── cat
+        │   │   └── main.go
+        │   ├── echo
+        │   │   └── main.go
+        │   ├── env
+        │   │   └── main.go
+        │   ├── false
+        │   │   └── main.go
+        │   ├── head
+        │   │   └── main.go
+        │   ├── tail
+        │   │   └── main.go
+        │   ├── tree
+        │   │   └── main.go
+        │   ├── true
+        │   │   └── main.go
+        │   ├── wc
+        │   │   └── main.go
+        │   └── yes
+        │       └── main.go
         ├── commands
         │   ├── cat.go
         │   ├── echo.go
@@ -23,9 +44,6 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
         │   ├── wc.go
         │   └── yes.go
         ├── go.mod
-        ├── main
-        │   ├── main
-        │   └── main.go
         ├── models
         │   ├── command.go
         │   └── commands.go
@@ -33,7 +51,6 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
             ├── generalUtils.go
             └── validateInput.go
 ```
-
 
 - **bin/**: Contains executable binaries.
 - **pkg/**: Holds package files.
@@ -50,7 +67,7 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 - **env**: List all environment variables.
   - No additional flags allowed.
 
-- **false**: Do nothing, unsuccessfully..
+- **false**: Do nothing, unsuccessfully.
   - No additional flags allowed.
 
 - **head**: Output the first part of files.
@@ -73,28 +90,150 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 
 ## Getting Started
 
-1. **Installation**: Clone the repository and navigate to `src/Coreutils-EYAD_HUSSEIN`.
+### Installation
 
-2. **Build**: Compile the project using `go build`.
+Clone the repository and navigate to `src/Coreutils-EYAD_HUSSEIN`.
 
+### Building Commands
+
+You can build each command separately. Below are the instructions for building and using each command.
+
+#### cat
+
+1. **Build**:
     ```bash
-    go build -o coreutils main/main.go
+    go build -o cat cmd/cat/main.go
     ```
 
-3. **Usage**: Execute commands using the built binary `coreutils`.
-
+2. **Usage**:
     ```bash
-    ./coreutils <command> [flags] (arg || [<args list>])
+    ./cat [flags] <file>...
     ```
+
+#### echo
+
+1. **Build**:
+    ```bash
+    go build -o echo cmd/echo/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./echo [flags] <text>...
+    ```
+
+#### env
+
+1. **Build**:
+    ```bash
+    go build -o env cmd/env/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./env
+    ```
+
+#### false
+
+1. **Build**:
+    ```bash
+    go build -o false cmd/false/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./false
+    ```
+
+#### head
+
+1. **Build**:
+    ```bash
+    go build -o head cmd/head/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./head [flags] <file>...
+    ```
+
+#### tail
+
+1. **Build**:
+    ```bash
+    go build -o tail cmd/tail/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./tail [flags] <file>...
+    ```
+
+#### tree
+
+1. **Build**:
+    ```bash
+    go build -o tree cmd/tree/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./tree [flags] <directory>
+    ```
+
+#### true
+
+1. **Build**:
+    ```bash
+    go build -o true cmd/true/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./true
+    ```
+
+#### wc
+
+1. **Build**:
+    ```bash
+    go build -o wc cmd/wc/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./wc [flags] <file>...
+    ```
+
+#### yes
+
+1. **Build**:
+    ```bash
+    go build -o yes cmd/yes/main.go
+    ```
+
+2. **Usage**:
+    ```bash
+    ./yes [text]
+    ```
+
+### Usage
+
+Execute commands using the built binary for each specific command.
+
+```bash
+./<command> [flags] (arg || [<args list>])
+```
 
 ## Examples
 
-- Print the first 20 lines of a file:
-  
-  ```bash
-  ./coreutils head -n 10 myfile.txt
+- Print the first 10 lines of a file:
+    ```bash
+    ./head -n 10 myfile.txt
+    ```
 
-- Print the last 20 lines of a file:
-  
-  ```bash
-  ./coreutils tail -n 10 myfile.txt
+- Print the last 10 lines of a file:
+    ```bash
+    ./tail -n 10 myfile.txt
+    ```
