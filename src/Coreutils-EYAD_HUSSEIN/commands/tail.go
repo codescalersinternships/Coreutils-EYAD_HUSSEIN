@@ -9,7 +9,14 @@ import (
 	"strconv"
 )
 
-func Tail(command *models.Command, flags []string) {
+func Tail(flags []string) {
+
+	command := models.CommandsMap["tail"]
+
+	if !utils.ValidateFlags(flags, command.Flags) {
+		os.Exit(1)
+	}
+	
 	ok := utils.ContainsFlag(flags, "-n")
 	idx := utils.GetIndexOfArg("-n")
 

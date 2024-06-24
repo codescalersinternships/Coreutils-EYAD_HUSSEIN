@@ -8,7 +8,9 @@ import (
 	"strconv"
 )
 
-func Head(command *models.Command, flags []string) {
+func Head(flags []string) {
+	command := models.CommandsMap["head"]
+	
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}

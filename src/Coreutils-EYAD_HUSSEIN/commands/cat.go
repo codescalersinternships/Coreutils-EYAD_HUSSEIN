@@ -7,7 +7,9 @@ import (
 	"os"
 )
 
-func Cat(command *models.Command, flags []string) {
+func Cat(flags []string) {
+	command := models.CommandsMap["cat"]
+	
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}

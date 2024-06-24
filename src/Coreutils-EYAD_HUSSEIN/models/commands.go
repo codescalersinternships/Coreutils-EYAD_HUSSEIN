@@ -22,6 +22,7 @@ func createCommands() []*Command {
 		CreateCommand("false", []string{}),
 		CreateCommand("env", []string{}),
 		CreateCommand("yes", []string{}),
+		CreateCommand("tree", []string{"-L"}),
 	}
 
 

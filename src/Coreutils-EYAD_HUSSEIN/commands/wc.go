@@ -1,19 +1,21 @@
 package commands
 
 import (
+	"Coreutils-EYAD_HUSSEIN/models"
 	"Coreutils-EYAD_HUSSEIN/utils"
 	"fmt"
 	"os"
 	"unicode"
 )
 
-type dataHolder struct {
-	chars int
-	words int
-	lines int
-}
-
 func Wc(flags []string) {
+	
+	command := models.CommandsMap["wc"]
+	
+	if !utils.ValidateFlags(flags, command.Flags) {
+		os.Exit(1)
+	}
+	
 	if len(os.Args) == 1 {
 		fmt.Println("No file was entered!")
 		os.Exit(1)
