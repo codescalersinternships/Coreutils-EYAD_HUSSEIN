@@ -1,17 +1,15 @@
-package commands
+package pkg
 
 import (
-	"Coreutils-EYAD_HUSSEIN/models"
-	"Coreutils-EYAD_HUSSEIN/utils"
 	"fmt"
 	"os"
 	"unicode"
 )
 
 func Wc(flags []string) {
-	command := models.CommandsMap["wc"]
+	command := CommandsMap["wc"]
 
-	if !utils.ValidateFlags(flags, command.Flags) {
+	if !ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 
@@ -91,11 +89,11 @@ func countFileStats(file string) (int, int, int) {
 }
 
 func printFileStats(flags []string, file string, lines, words, chars int) {
-	if utils.ContainsFlag(flags, "-l") {
+	if ContainsFlag(flags, "-l") {
 		fmt.Printf("%d ", lines)
-	} else if utils.ContainsFlag(flags, "-w") {
+	} else if ContainsFlag(flags, "-w") {
 		fmt.Printf("%d ", words)
-	} else if utils.ContainsFlag(flags, "-c") {
+	} else if ContainsFlag(flags, "-c") {
 		fmt.Printf("%d ", chars)
 	} else {
 		fmt.Printf("%d %d %d ", lines, words, chars)
@@ -106,11 +104,11 @@ func printFileStats(flags []string, file string, lines, words, chars int) {
 
 func printTotalStats(flags []string, numFiles, totalLines, totalWords, totalChars int) {
 	if numFiles > 1 {
-		if utils.ContainsFlag(flags, "-l") {
+		if ContainsFlag(flags, "-l") {
 			fmt.Printf("%d ", totalLines)
-		} else if utils.ContainsFlag(flags, "-w") {
+		} else if ContainsFlag(flags, "-w") {
 			fmt.Printf("%d ", totalWords)
-		} else if utils.ContainsFlag(flags, "-c") {
+		} else if ContainsFlag(flags, "-c") {
 			fmt.Printf("%d ", totalChars)
 		} else {
 			fmt.Printf("%d %d %d ", totalLines, totalWords, totalChars)

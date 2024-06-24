@@ -1,13 +1,8 @@
-package utils
+package pkg
 
 import (
 	"fmt"
 )
-
-
-
-
-
 
 func ValidateFlags(flags []string, allowedFlags []string) bool {
 	if !validateAllowedFlags(flags, allowedFlags) {

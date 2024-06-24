@@ -1,14 +1,12 @@
 package main
 
 import (
-	"Coreutils-EYAD_HUSSEIN/commands"
-	"Coreutils-EYAD_HUSSEIN/models"
-	"Coreutils-EYAD_HUSSEIN/utils"
+	"github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN/pkg"
 )
 
 func main() {
-	flags := utils.GetFlags()
-	utils.ValidateFlags(flags, models.CommandsMap["head"].Flags)
+	flags := pkg.GetFlags()
+	pkg.ValidateFlags(flags, pkg.CommandsMap["head"].Flags)
 
-	commands.Head(flags)
+	pkg.Head(flags)
 }

@@ -1,8 +1,6 @@
-package commands
+package pkg
 
 import (
-	"Coreutils-EYAD_HUSSEIN/models"
-	"Coreutils-EYAD_HUSSEIN/utils"
 	"bufio"
 	"fmt"
 	"os"
@@ -10,9 +8,9 @@ import (
 )
 
 func Tail(flags []string) {
-	command := models.CommandsMap["tail"]
+	command := CommandsMap["tail"]
 
-	if !utils.ValidateFlags(flags, command.Flags) {
+	if !ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 
@@ -27,8 +25,8 @@ func Tail(flags []string) {
 }
 
 func parseTailFlags(flags []string) (int, []string) {
-	ok := utils.ContainsFlag(flags, "-n")
-	idx := utils.GetIndexOfArg("-n")
+	ok := ContainsFlag(flags, "-n")
+	idx := GetIndexOfArg("-n")
 
 	numLines := 10
 	var files []string

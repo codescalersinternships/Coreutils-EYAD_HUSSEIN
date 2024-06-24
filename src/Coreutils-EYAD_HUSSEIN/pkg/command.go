@@ -1,4 +1,4 @@
-package models
+package pkg
 
 type Command struct {
 	Name  string

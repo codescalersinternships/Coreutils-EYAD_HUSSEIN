@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Coreutils-EYAD_HUSSEIN/commands"
+	"github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN/pkg"
 )
 
 func main() {
-	commands.Env()
+	pkg.Env()
 }

@@ -1,8 +1,6 @@
-package commands
+package pkg
 
 import (
-	"Coreutils-EYAD_HUSSEIN/models"
-	"Coreutils-EYAD_HUSSEIN/utils"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,16 +9,16 @@ import (
 )
 
 func Tree(flags []string) {
-	command := models.CommandsMap["tree"]
+	command := CommandsMap["tree"]
 
-	if !utils.ValidateFlags(flags, command.Flags) {
+	if !ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 
 	maxDepth := -1
 
-	if ok := utils.ContainsFlag(flags, "-L"); ok {
-		idx := utils.GetIndexOfArg("-L")
+	if ok := ContainsFlag(flags, "-L"); ok {
+		idx := GetIndexOfArg("-L")
 		tempMaxDepth, err := strconv.Atoi(os.Args[idx+1])
 		if err != nil {
 			fmt.Println("Invalid depth value")

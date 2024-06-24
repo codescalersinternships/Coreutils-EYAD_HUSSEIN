@@ -1,4 +1,4 @@
-package models
+package pkg
 
 var Commands []*Command
 var CommandsMap map[string]*Command

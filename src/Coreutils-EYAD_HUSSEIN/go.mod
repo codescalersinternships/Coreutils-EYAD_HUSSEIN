@@ -1,3 +1,3 @@
-module Coreutils-EYAD_HUSSEIN
+module github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN
 
 go 1.22.4

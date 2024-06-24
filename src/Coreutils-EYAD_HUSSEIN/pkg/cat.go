@@ -1,20 +1,18 @@
-package commands
+package pkg
 
 import (
-	"Coreutils-EYAD_HUSSEIN/models"
-	"Coreutils-EYAD_HUSSEIN/utils"
 	"fmt"
 	"os"
 )
 
 func Cat(flags []string) {
-	command := models.CommandsMap["cat"]
+	command := CommandsMap["cat"]
 
-	if !utils.ValidateFlags(flags, command.Flags) {
+	if !ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
 
-	ok := utils.ContainsFlag(flags, "-n")
+	ok := ContainsFlag(flags, "-n")
 	files := parseCatArgs(ok)
 
 	if len(files) == 0 {
