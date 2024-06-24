@@ -53,8 +53,8 @@ func main() {
 		commands.Env()
 	case models.CommandsMap["yes"].Name:
 		commands.Yes()
-	// case models.CommandsMap["tree"].Name:
-	// 	commands.Tree()
+	case models.CommandsMap["tree"].Name:
+		commands.Tree(flags)
 	default:
 		os.Exit(1)
 	}
