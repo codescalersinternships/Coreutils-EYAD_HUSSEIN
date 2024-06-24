@@ -33,14 +33,14 @@ func parseCatArgs(ok bool) []string {
 	var files []string
 
 	if ok {
-		for _, arg := range os.Args[2:] {
+		for _, arg := range os.Args[1:] {
 			if arg == "-n" {
 				continue
 			}
 			files = append(files, arg)
 		}
 	} else {
-		files = os.Args[2:]
+		files = os.Args[1:]
 	}
 
 	return files
