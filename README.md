@@ -1,6 +1,6 @@
-# github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN
+# Coreutils-EYAD_HUSSEIN
 
-github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities implemented in Go.
+Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities implemented in Go.
 
 ## Project Structure
 
@@ -35,23 +35,19 @@ github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN is a collection of Unix
         ├── go.mod
         └── pkg
             ├── cat.go
-            ├── command.go
-            ├── commands.go
             ├── echo.go
             ├── env.go
             ├── false.go
-            ├── generalUtils.go
             ├── head.go
             ├── tail.go
             ├── tree.go
             ├── true.go
-            ├── validateInput.go
             ├── wc.go
             └── yes.go
 ```
 - **cmd/**: Holds commands directories and files.
 - **pkg/**: Holds package files.
-- **src/github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN/**: Source directory for the project.
+- **src/Coreutils-EYAD_HUSSEIN/**: Source directory for the project.
 
 ## Commands Implemented
 
@@ -98,7 +94,7 @@ github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN is a collection of Unix
 
 ### Installation
 
-Clone the repository and navigate to `src/github.com/codescalersinternships/Coreutils-EYAD_HUSSEIN`.
+Clone the repository and navigate to `src/Coreutils-EYAD_HUSSEIN`.
 
 ### Building Commands
 
