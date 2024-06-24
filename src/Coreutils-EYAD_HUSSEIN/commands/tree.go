@@ -29,14 +29,15 @@ func Tree(flags []string) {
 		maxDepth = tempMaxDepth
 	}
 
-	if maxDepth == -1{
-		printDirectory(os.Args[2], 0, maxDepth)
-	} else {
-		for _, arg := range os.Args[2:] {
-			if arg == "-L" || arg == strconv.Itoa(maxDepth) {
-				continue
-			}
-			printDirectory(arg, 0, maxDepth)
+	
+	for index, arg := range os.Args[2:] {
+		if arg == "-L" || arg == strconv.Itoa(maxDepth) {
+			continue
+		}
+		printDirectory(arg, 0, maxDepth)
+		
+		if index != len(os.Args[2:])-1 {
+			fmt.Println()
 		}
 	}
 }
