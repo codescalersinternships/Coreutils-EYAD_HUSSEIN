@@ -15,7 +15,7 @@ func createCommands() []*Command {
 	commands := []*Command{
 		CreateCommand("head", []string{"-n"}, "Description for head"),
 		CreateCommand("tail", []string{"-n"}, "Description for tail"),
-		CreateCommand("wc", []string{"-n", "-w", "-c"}, "Description for wc"),
+		CreateCommand("wc", []string{"-l", "-w", "-c"}, "Description for wc"),
 		CreateCommand("cat", []string{"-n"}, "Description for cat"),
 		CreateCommand("echo", []string{"-n"}, "Description for echo"),
 		CreateCommand("true", []string{}, "Description for true"),

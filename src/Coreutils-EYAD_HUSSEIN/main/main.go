@@ -39,8 +39,8 @@ func main() {
 		commands.Head(commandModel, flags)
 	case "tail":
 		commands.Tail(commandModel, flags)
-	// case "wc":
-	// 	commands.Wc(flags)
+	case "wc":
+		commands.Wc(flags)
 	case "cat":
 		commands.Cat(commandModel, flags)
 	case models.CommandsMap["echo"].Name:
