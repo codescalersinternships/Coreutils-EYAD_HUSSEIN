@@ -39,7 +39,7 @@ func Wc(flags []string) {
 func parseWcArgs() []string {
 	var files []string
 
-	for _, arg := range os.Args[2:] {
+	for _, arg := range os.Args[1:] {
 		if arg != "-l" && arg != "-w" && arg != "-c" {
 			files = append(files, arg)
 		}

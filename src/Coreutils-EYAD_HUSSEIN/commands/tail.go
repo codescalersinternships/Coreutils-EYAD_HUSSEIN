@@ -34,7 +34,7 @@ func parseTailFlags(flags []string) (int, []string) {
 	var files []string
 
 	if ok {
-		for _, arg := range os.Args[2:] {
+		for _, arg := range os.Args[1:] {
 			if arg == "-n" || arg == os.Args[idx+1] {
 				numLinesTemp, err := strconv.Atoi(os.Args[idx+1])
 				if err != nil {
@@ -49,7 +49,7 @@ func parseTailFlags(flags []string) (int, []string) {
 			files = append(files, arg)
 		}
 	} else {
-		files = os.Args[2:]
+		files = os.Args[1:]
 	}
 
 	return numLines, files
