@@ -3,6 +3,7 @@ package pkg
 import (
 	"flag"
 	"fmt"
+	"strings"
 )
 
 func Echo() {
@@ -12,15 +13,11 @@ func Echo() {
 
 	flag.Parse()
 
-	for i, arg := range flag.Args() {
-		if i == len(flag.Args())-1 {
-			if nFlag {
-				fmt.Print(arg)
-			} else {
-				fmt.Println(arg)
-			}
-		} else {
-			fmt.Print(arg, " ")
-		}
+	output := strings.Join(flag.Args(), " ")
+
+	if nFlag {
+		fmt.Print(output)
+	} else {
+		fmt.Println(output)
 	}
 }
