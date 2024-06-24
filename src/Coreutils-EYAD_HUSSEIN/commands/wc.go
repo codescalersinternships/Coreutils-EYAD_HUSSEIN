@@ -9,25 +9,13 @@ import (
 )
 
 func Wc(flags []string) {
-	
 	command := models.CommandsMap["wc"]
-	
+
 	if !utils.ValidateFlags(flags, command.Flags) {
 		os.Exit(1)
 	}
-	
-	if len(os.Args) == 1 {
-		fmt.Println("No file was entered!")
-		os.Exit(1)
-	}
 
-	var files []string
-
-	for _, arg := range os.Args[2:] {
-		if arg != "-l" && arg != "-w" && arg != "-c" {
-			files = append(files, arg)
-		}
-	}
+	files := parseWcArgs()
 
 	if len(files) == 0 {
 		fmt.Println("No files were entered!")
@@ -37,69 +25,93 @@ func Wc(flags []string) {
 	var totalLines, totalWords, totalChars int
 
 	for _, file := range files {
-		f, err := os.Open(file)
-		if err != nil {
+		lineCount, wordCount, charCount := countFileStats(file)
+		totalLines += lineCount
+		totalWords += wordCount
+		totalChars += charCount
+
+		printFileStats(flags, file, lineCount, wordCount, charCount)
+	}
+
+	printTotalStats(flags, len(files), totalLines, totalWords, totalChars)
+}
+
+func parseWcArgs() []string {
+	var files []string
+
+	for _, arg := range os.Args[2:] {
+		if arg != "-l" && arg != "-w" && arg != "-c" {
+			files = append(files, arg)
+		}
+	}
+
+	return files
+}
+
+func countFileStats(file string) (int, int, int) {
+	f, err := os.Open(file)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+	defer f.Close()
+
+	buffer := make([]byte, 4096)
+	lineCounter := 0
+	wordCounter := 0
+	charCounter := 0
+	inWord := false
+
+	for {
+		n, err := f.Read(buffer)
+		if err != nil && err.Error() != "EOF" {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
-		defer f.Close()
 
-		buffer := make([]byte, 4096)
-		lineCounter := 0
-		wordCounter := 0
-		charCounter := 0
-		inWord := false
-
-		for {
-			n, err := f.Read(buffer)
-			if err != nil && err.Error() != "EOF" {
-				fmt.Println("Error:", err)
-				os.Exit(1)
-			}
-
-			if n == 0 {
-				break
-			}
-
-			for _, char := range string(buffer[:n]) {
-				charCounter++
-				if char == '\n' {
-					lineCounter++
-				}
-				if unicode.IsSpace(rune(char)) {
-					inWord = false
-				} else if !inWord {
-					inWord = true
-					wordCounter++
-				}
-			}
+		if n == 0 {
+			break
 		}
 
-		
-		totalLines += lineCounter
-		totalWords += wordCounter
-		totalChars += charCounter
-
-		if utils.ContainsFlag(flags, "-l") {
-			fmt.Printf("%d ", lineCounter)
-		} else if utils.ContainsFlag(flags, "-c") {
-			fmt.Printf("%d ", charCounter)
-		} else if utils.ContainsFlag(flags, "-w") {
-			fmt.Printf("%d ", wordCounter)
-		} else {
-			fmt.Printf("%d %d %d ", lineCounter, wordCounter, charCounter)
+		for _, char := range string(buffer[:n]) {
+			charCounter++
+			if char == '\n' {
+				lineCounter++
+			}
+			if unicode.IsSpace(rune(char)) {
+				inWord = false
+			} else if !inWord {
+				inWord = true
+				wordCounter++
+			}
 		}
-
-		fmt.Println(file)
 	}
 
-	if len(files) > 1 {
+	return lineCounter, wordCounter, charCounter
+}
+
+func printFileStats(flags []string, file string, lines, words, chars int) {
+	if utils.ContainsFlag(flags, "-l") {
+		fmt.Printf("%d ", lines)
+	} else if utils.ContainsFlag(flags, "-w") {
+		fmt.Printf("%d ", words)
+	} else if utils.ContainsFlag(flags, "-c") {
+		fmt.Printf("%d ", chars)
+	} else {
+		fmt.Printf("%d %d %d ", lines, words, chars)
+	}
+
+	fmt.Println(file)
+}
+
+func printTotalStats(flags []string, numFiles, totalLines, totalWords, totalChars int) {
+	if numFiles > 1 {
 		if utils.ContainsFlag(flags, "-l") {
 			fmt.Printf("%d ", totalLines)
-		} else if utils.ContainsFlag(flags, "-c") {
-			fmt.Printf("%d ", totalChars)
 		} else if utils.ContainsFlag(flags, "-w") {
 			fmt.Printf("%d ", totalWords)
+		} else if utils.ContainsFlag(flags, "-c") {
+			fmt.Printf("%d ", totalChars)
 		} else {
 			fmt.Printf("%d %d %d ", totalLines, totalWords, totalChars)
 		}

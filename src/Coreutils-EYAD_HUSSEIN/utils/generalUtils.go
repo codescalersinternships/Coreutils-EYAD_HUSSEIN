@@ -1,6 +1,9 @@
 package utils
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 func ContainsFlag(flags []string, flag string) bool {
         for _, f := range flags {
@@ -21,4 +24,18 @@ func GetIndexOfArg(arg string) int {
         }
 
         return -1
+}
+
+
+func GetFlags() []string {
+        args := os.Args[2:]
+
+	flags := []string{}
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "-") {
+			flags = append(flags, arg)
+		}
+	}
+
+        return flags
 }

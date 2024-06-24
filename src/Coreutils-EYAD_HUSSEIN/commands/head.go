@@ -15,13 +15,22 @@ func Head(flags []string) {
 		os.Exit(1)
 	}
 
+	numLines, files := parseHeadFlags(flags)
 
+	if len(files) == 0 {
+		fmt.Println("No files were entered!")
+		os.Exit(1)
+	}
+
+	processHeadFiles(files, numLines)
+}
+
+func parseHeadFlags(flags []string) (int, []string) {
 	ok := utils.ContainsFlag(flags, "-n")
 	idx := utils.GetIndexOfArg("-n")
 
-	var files []string
-
 	numLines := 10
+	var files []string
 
 	if ok {
 		for _, arg := range os.Args[2:] {
@@ -42,64 +51,63 @@ func Head(flags []string) {
 		files = os.Args[2:]
 	}
 
-	if len(files) == 0 {
-		fmt.Println("No files were entered!")
-		os.Exit(1)
-	}
+	return numLines, files
+}
 
-
+func processHeadFiles(files []string, numLines int) {
 	for _, file := range files {
 		f, err := os.Open(file)
-
 		if err != nil {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
-
 		defer f.Close()
 
 		if len(files) > 1 {
 			fmt.Println("==> " + file + " <==")
 		}
-		counter := 0
 
-		buffer := make([]byte, 4096)
-		var line string
+		readHeadLines(f, numLines)
+		fmt.Println()
+	}
+}
 
-		for {
-			n, err := f.Read(buffer)
-			if err != nil && err.Error() != "EOF" {
-				fmt.Println("Error:", err)
-				os.Exit(1)
-			}
+func readHeadLines(f *os.File, numLines int) {
+	counter := 0
+	buffer := make([]byte, 4096)
+	var line string
 
-			if n == 0 {
-				break
-			}
+	for {
+		n, err := f.Read(buffer)
+		if err != nil && err.Error() != "EOF" {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
 
-			content := string(buffer[:n])
-			done := false
+		if n == 0 {
+			break
+		}
 
-			for _, char := range content {
-				if char == '\n' {
-					fmt.Println(line)
-					line = ""
-					counter++
+		content := string(buffer[:n])
+		done := false
 
-					if counter == numLines {
-						done = true
-						break
-					}
-				} else {
-					line += string(char)
+		for _, char := range content {
+			if char == '\n' {
+				fmt.Println(line)
+				line = ""
+				counter++
+
+				if counter == numLines {
+					done = true
+					break
 				}
-			}
-
-			if done {
-				break
+			} else {
+				line += string(char)
 			}
 		}
 
-		fmt.Println()
+		if done {
+			break
+		}
 	}
 }
