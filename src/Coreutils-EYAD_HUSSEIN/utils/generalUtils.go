@@ -27,7 +27,7 @@ func GetIndexOfArg(arg string) int {
 }
 
 func GetFlags() []string {
-	args := os.Args[2:]
+	args := os.Args[1:]
 
 	flags := []string{}
 	for _, arg := range args {

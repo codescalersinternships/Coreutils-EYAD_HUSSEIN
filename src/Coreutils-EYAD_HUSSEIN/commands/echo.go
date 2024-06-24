@@ -14,15 +14,15 @@ func Echo(flags []string) {
 		os.Exit(1)
 	}
 
-	start := 2
+	start := 1
 
 	ok := utils.ContainsFlag(flags, "-n")
 	idx := utils.GetIndexOfArg("-n")
 
-	flag := (ok && idx == 2)
+	flag := (ok && idx == 1)
 
 	if flag {
-		start = 3
+		start = 2
 	}
 
 	for _, arg := range os.Args[start:] {
