@@ -16,9 +16,7 @@ func Tree() {
 
 	flag.Parse()
 
-	ok := len(flag.Args()) > 0
-
-	if !ok {
+	if !(len(flag.Args()) > 0) {
 		printDirectory(".", 0, maxDepth)
 	} else {
 		dirs := flag.Args()

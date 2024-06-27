@@ -45,6 +45,7 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
             ├── wc.go
             └── yes.go
 ```
+
 - **cmd/**: Holds commands directories and files.
 - **pkg/**: Holds package files.
 - **src/Coreutils-EYAD_HUSSEIN/**: Source directory for the project.
@@ -53,11 +54,11 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 
 - **cat**: Concatenate files and print on the standard output.
 
-  - Allowed flags: `-n`
+  - Allowed flags: `-n` flag to number output lines.
 
 - **echo**: Display line of text in standard output.
 
-  - Allowed flags: `-n`
+  - Allowed flags: `-n` flag to omit the trailing newline.
 
 - **env**: List all environment variables.
 
@@ -69,15 +70,15 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 
 - **head**: Output the first part of files.
 
-  - Allowed flags: `-n`
+  - Allowed flags: `-n` flag to specify the number of lines to print.
 
 - **tail**: Output the last part of files.
 
-  - Allowed flags: `-n`
+  - Allowed flags: `-n` flag to specify the number of lines to print.
 
 - **tree**: List contents of directories in a tree-like format.
 
-  - Allowed flags: `-L`
+  - Allowed flags: `-L` to list the deepest level to list directories' contents'
 
 - **true**: Do nothing, successfully.
 
@@ -85,7 +86,7 @@ Coreutils-EYAD_HUSSEIN is a collection of Unix-like command line utilities imple
 
 - **wc**: Print newline, word, and byte counts for each file.
 
-  - Allowed flags: `-l`, `-w`, `-c`
+  - Allowed flags: `-l`, `-w`, `-c` flags to display only lines, words, or characters respectively.
 
 - **yes**: Output a string repeatedly until killed.
   - No additional flags allowed.

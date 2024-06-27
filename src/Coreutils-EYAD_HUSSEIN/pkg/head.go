@@ -13,9 +13,7 @@ func Head() {
 
 	flag.Parse()
 
-	ok := len(flag.Args()) > 0
-
-	if !ok {
+	if !(len(flag.Args()) > 0) {
 		fmt.Println("No files were entered!")
 		os.Exit(1)
 	}
